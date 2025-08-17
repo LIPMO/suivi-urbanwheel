@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>UrbanWheel – Suivi réparation</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f5f5f5; padding:20px; }
+    .card { background:white; padding:20px; border-radius:10px; max-width:600px; margin:auto; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    .input { padding:10px; width:80%; border:1px solid #ccc; border-radius:6px; }
+    .btn { padding:10px 20px; margin-left:10px; border:none; background:#333; color:white; border-radius:6px; cursor:pointer; }
+    .status { margin-top:10px; padding:10px; border-radius:6px; font-weight:bold; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🔧 Suivi de réparation UrbanWheel</h2>
+    <input id="query" class="input" placeholder="Ticket (RW-2025-014) ou téléphone">
+    <button onclick="search()" class="btn">Rechercher</button>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function search() {
+      const q = document.getElementById("query").value.trim();
+      const res = await fetch("/api/repairs");
+      const data = await res.json();
+      const found = data.find(r => r.id.toLowerCase() === q.toLowerCase() || (r.phone && r.phone.endsWith(q)));
+      const div = document.getElementById("result");
+      if (!found) {
+        div.innerHTML = "<p>Aucun résultat.</p>";
+        return;
+      }
+      div.innerHTML = `
+        <p><b>Client:</b> ${found.client}</p>
+        <p><b>Modèle:</b> ${found.modele}</p>
+        <p><b>Réparation:</b> ${found.reparation}</p>
+        <p class="status">📌 Statut: ${found.statut}</p>
+        <p><b>Dépôt:</b> ${found.dateDepot} | <b>Estimation:</b> ${found.dateEstimee}</p>
+        <p><i>${found.notes||""}</i></p>
+      `;
+    }
+  </script>
+</body>
+</html>

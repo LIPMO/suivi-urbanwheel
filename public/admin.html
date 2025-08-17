@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>UrbanWheel – Admin</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#222; color:white; padding:20px; }
+    .card { background:#333; padding:20px; border-radius:10px; max-width:700px; margin:auto; }
+    input, textarea { width:100%; margin:5px 0; padding:8px; border-radius:6px; border:none; }
+    button { padding:10px 15px; margin-top:10px; border:none; background:#4caf50; color:white; border-radius:6px; cursor:pointer; }
+    .logout { background:#e53935; }
+  </style>
+</head>
+<body>
+  <div class="card" id="login">
+    <h2>🔒 Connexion Admin</h2>
+    <input type="password" id="pwd" placeholder="Mot de passe">
+    <button onclick="login()">Se connecter</button>
+  </div>
+
+  <div class="card" id="panel" style="display:none;">
+    <h2>📋 Gestion des réparations</h2>
+    <button onclick="logout()" class="logout">Déconnexion</button>
+    <h3>➕ Ajouter</h3>
+    <input id="id" placeholder="ID (RW-2025-014)">
+    <input id="client" placeholder="Client">
+    <input id="phone" placeholder="Téléphone">
+    <input id="modele" placeholder="Modèle">
+    <input id="reparation" placeholder="Réparation">
+    <input id="statut" placeholder="Statut">
+    <input id="dateDepot" placeholder="Date dépôt">
+    <input id="dateEstimee" placeholder="Date estimée">
+    <textarea id="notes" placeholder="Notes"></textarea>
+    <button onclick="save()">💾 Sauvegarder</button>
+    <h3>📜 Liste</h3>
+    <pre id="list"></pre>
+  </div>
+
+  <script>
+    const PASSWORD = "urban123";
+    async function login() {
+      if (document.getElementById("pwd").value === PASSWORD) {
+        document.getElementById("login").style.display="none";
+        document.getElementById("panel").style.display="block";
+        load();
+      } else alert("Mauvais mot de passe !");
+    }
+    function logout() {
+      document.getElementById("panel").style.display="none";
+      document.getElementById("login").style.display="block";
+    }
+    async function load() {
+      const res = await fetch("/api/repairs");
+      const data = await res.json();
+      document.getElementById("list").textContent = JSON.stringify(data,null,2);
+    }
+    async function save() {
+      const obj = {
+        id: id.value, client: client.value, phone: phone.value, modele: modele.value,
+        reparation: reparation.value, statut: statut.value, dateDepot: dateDepot.value,
+        dateEstimee: dateEstimee.value, notes: notes.value
+      };
+      await fetch("/api/repairs", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(obj)});
+      load();
+      alert("Ajouté !");
+    }
+  </script>
+</body>
+</html>
