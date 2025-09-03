@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Résultat du suivi</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <% if (error) { %>
+      <p class="error"><%= error %></p>
+    <% } else { %>
+      <h2>📦 Suivi pour <%= client.nom %></h2>
+      <p><strong>Code :</strong> <%= client.code %></p>
+      <p><strong>Statut :</strong> <%= client.statut %></p>
+    <% } %>
+  </div>
+</body>
+</html>

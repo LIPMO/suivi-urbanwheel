@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - UrbanWheel</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>⚙️ Panneau Admin</h1>
+
+    <h2>Ajouter un client</h2>
+    <form action="/admin/add" method="POST">
+      <input type="text" name="nom" placeholder="Nom du client" required>
+      <input type="text" name="statut" placeholder="Statut initial" required>
+      <button type="submit">Créer</button>
+    </form>
+
+    <h2>Clients existants</h2>
+    <ul>
+      <% clients.forEach(c => { %>
+        <li>
+          <strong><%= c.nom %></strong> - 
+          <%= c.code %> - 
+          <%= c.statut %>
+          <form action="/admin/update" method="POST" style="margin-top:5px;">
+            <input type="hidden" name="code" value="<%= c.code %>">
+            <input type="text" name="statut" placeholder="Nouveau statut" required>
+            <button type="submit">Mettre à jour</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+</body>
+</html>
