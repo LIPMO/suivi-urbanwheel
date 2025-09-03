@@ -1,5 +1,0 @@
-[
-  {"id":"RW-2025-014","client":"Lucas","phone":"+33612345678","modele":"Kugoo G2 Pro","reparation":"Changement de batterie","statut":"En cours","dateDepot":"2025-08-15","dateEstimee":"2025-08-20","notes":"Batterie d'origine HS. Remplacement 48V prévu."},
-  {"id":"RW-2025-015","client":"Maya","phone":"+33798765432","modele":"Kukirin G3","reparation":"Frein avant + purge","statut":"En file d’attente","dateDepot":"2025-08-17","dateEstimee":"2025-08-19","notes":"Levier spongieux, prévoir DOT et plaquettes."},
-  {"id":"RW-2025-016","client":"Yanis","phone":"+33655667788","modele":"G2 Master","reparation":"Contrôleur + firmware","statut":"En attente de pièces","dateDepot":"2025-08-14","dateEstimee":"2025-08-25","notes":"Commande contrôleur en cours chez fournisseur."}
-]
